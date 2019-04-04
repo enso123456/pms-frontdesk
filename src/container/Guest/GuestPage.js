@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Row, Col, Table, Button, Icon, Input } from 'antd';
+import { Row, Col, Table, Button, Icon, Input, Form } from 'antd';
 
 import Modal from '../../component/Modal';
+import TextField from '../../component/TextField';
 
 import data from './data.json';
 
@@ -63,6 +64,7 @@ class GuestPage extends Component {
       },
     ];
 
+    const { getFieldDecorator } = this.props.form;
 
     return (
       <div>
@@ -90,17 +92,44 @@ class GuestPage extends Component {
         </Row>
 
         <Modal
-          title={'Guest Form'}
+          title={'Guest Details'}
           visible={this.state.visible}
           confirmLoading={this.state.confirmLoading}
           handleOk={this.handleOk}
           handleCancel={this.handleCancel}
+          okText={'Add Guest'}
         >
-          <h1>Hello Modal</h1>
+          <Form layout={"vertical"}>
+            <TextField
+              getFieldDecorator={getFieldDecorator}
+              fieldName={'firstName'}
+              rules={{ required: true, message: 'Please provide first name' }}
+              placeholder={'First Name'}
+            />
+            <TextField
+              getFieldDecorator={getFieldDecorator}
+              fieldName={'lastName'}
+              rules={{ required: true, message: 'Please provide last name' }}
+              placeholder={'Last Name'}
+            />
+            <TextField
+              getFieldDecorator={getFieldDecorator}
+              fieldName={'email'}
+              rules={{ required: true, message: 'Please provide email' }}
+              placeholder={'Email'}
+            />
+            <TextField
+              getFieldDecorator={getFieldDecorator}
+              fieldName={'contactNumber'}
+              placeholder={'Contact Number'}
+            />
+          </Form>
         </Modal>
       </div>
     );
   }
 };
 
-export default GuestPage;
+const WrappedGuestForm = Form.create({ name: 'register-guest' })(GuestPage);
+
+export default WrappedGuestForm;

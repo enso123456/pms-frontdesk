@@ -9,6 +9,7 @@ const ModalBox = ({
   children,
   handleCancel,
   handleOk,
+  okText,
 }) => {
   return (
     <div>
@@ -18,6 +19,7 @@ const ModalBox = ({
         onOk={handleOk}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
+        okText={okText}
       >
         {children}
       </Modal>
@@ -26,17 +28,19 @@ const ModalBox = ({
 };
 
 ModalBox.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   visible: PropTypes.bool.isRequired,
   confirmLoading: PropTypes.bool.isRequired,
   children: PropTypes.object,
   handleCancel: PropTypes.func.isRequired,
   handleOk: PropTypes.func.isRequired,
+  okText: PropTypes.string
 };
 
 ModalBox.defaultProps = {
   children: {},
   title: 'Modal Title',
+  okText: 'Ok',
 };
 
 export default ModalBox;
