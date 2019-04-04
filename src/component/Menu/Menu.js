@@ -19,7 +19,7 @@ const MainMenu = () => (
     <Menu.Item key="3">
       <Link to="/reservations">
         <Icon type="upload" />
-        <span>Reserve</span>
+        <span>Booking</span>
       </Link>
     </Menu.Item>
   </Menu>
