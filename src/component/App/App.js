@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Layout, Icon } from 'antd';
 
-import MainMenu from '../Menu';
+import './App.css';
+
+import MainMenu from '../Menu/Menu';
 
 const { Header, Sider, Content } = Layout;
 
-class Container extends Component {
+class App extends Component {
   state = {
     collapsed: false,
-  };
+  }
 
   toggle = () => {
     this.setState({
@@ -18,7 +20,6 @@ class Container extends Component {
   }
 
   render() {
-    const { children } = this.props;
     return (
       <Layout style={{ height: '100vh' }}>
         <Sider
@@ -41,7 +42,7 @@ class Container extends Component {
             margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280,
           }}
           >
-            {children}
+            {this.props.children}
           </Content>
         </Layout>
       </Layout>
@@ -49,8 +50,8 @@ class Container extends Component {
   }
 }
 
-Container.propTypes = {
+App.propTypes = {
   children: PropTypes.object.isRequired,
 };
 
-export default Container;
+export default App;
