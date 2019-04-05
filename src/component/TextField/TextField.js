@@ -19,7 +19,7 @@ const TextField = ({
 }
 
 TextField.propTypes = {
-  getFieldDecorator: PropTypes.object,
+  getFieldDecorator: PropTypes.func,
   fieldName: PropTypes.string.isRequired,
   rules: PropTypes.shape({
     required: PropTypes.bool,

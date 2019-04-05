@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import Router from './router';
 import * as serviceWorker from './serviceWorker';
 
+require('dotenv').config();
+
 ReactDOM.render(<Router />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

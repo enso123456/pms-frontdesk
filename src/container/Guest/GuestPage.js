@@ -3,8 +3,8 @@ import { Row, Col, Table, Button, Icon, Input, Form } from 'antd';
 
 import Modal from '../../component/Modal';
 import TextField from '../../component/TextField';
-
-import data from './data.json';
+import { GUEST_TABLE_HEADER } from '../../constant/table';
+import { getGuestLists } from '../../services/guest';
 
 const Search = Input.Search;
 
@@ -13,6 +13,16 @@ class GuestPage extends Component {
     ModalText: 'Content of the modal',
     visible: false,
     confirmLoading: false,
+    guests: []
+  }
+
+  async componentDidMount() {
+    try {
+      const response = await getGuestLists();
+      this.setState({ guests: response.data.data })
+    } catch (e) {
+      console.log(e)
+    };
   }
 
   showModal = () => {
@@ -44,26 +54,6 @@ class GuestPage extends Component {
 
 
   render() {
-    const columns = [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-      }, {
-        title: 'Gender',
-        dataIndex: 'gender',
-        key: 'gender',
-      }, {
-        title: 'Email',
-        dataIndex: 'email',
-        key: 'email',
-      }, {
-        title: 'Contact Number',
-        dataIndex: 'contactNumber',
-        key: 'contactNumber',
-      },
-    ];
-
     const { getFieldDecorator } = this.props.form;
 
     return (
@@ -88,7 +78,11 @@ class GuestPage extends Component {
         </Row >
         <Row gutter={16} style={{ marginTop: '18px' }}>
           <h1>Guest Lists</h1>
-          <Table columns={columns} dataSource={data} />
+          <Table
+            columns={GUEST_TABLE_HEADER}
+            rowKey={(row) => row.id}
+            dataSource={this.state.guests}
+          />
         </Row>
 
         <Modal
