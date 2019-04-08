@@ -13,7 +13,13 @@ class GuestPage extends Component {
     ModalText: 'Content of the modal',
     visible: false,
     confirmLoading: false,
-    guests: []
+    guests: [],
+    form: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      contactNumber: ''
+    },
   }
 
   async componentDidMount() {
@@ -32,6 +38,7 @@ class GuestPage extends Component {
   }
 
   handleOk = () => {
+    this.addGuest();
     this.setState({
       ModalText: 'The modal will be closed after two seconds',
       confirmLoading: true,
@@ -45,13 +52,24 @@ class GuestPage extends Component {
   }
 
   handleCancel = () => {
-    console.log('Clicked cancel button');
     this.setState({
       visible: false,
     });
   }
 
+  onChangeValue = (e) => {
+    this.setState({
+      form: {
+        ...this.state.form,
+        [e.target.name]: e.target.value
+      }
+    });
+  }
 
+  addGuest = () => {
+    // integrate save form
+    console.log(this.state.form);
+  }
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -99,23 +117,27 @@ class GuestPage extends Component {
               fieldName={'firstName'}
               rules={{ required: true, message: 'Please provide first name' }}
               placeholder={'First Name'}
+              onChange={this.onChangeValue}
             />
             <TextField
               getFieldDecorator={getFieldDecorator}
               fieldName={'lastName'}
               rules={{ required: true, message: 'Please provide last name' }}
               placeholder={'Last Name'}
+              onChange={this.onChangeValue}
             />
             <TextField
               getFieldDecorator={getFieldDecorator}
               fieldName={'email'}
               rules={{ required: true, message: 'Please provide email' }}
               placeholder={'Email'}
+              onChange={this.onChangeValue}
             />
             <TextField
               getFieldDecorator={getFieldDecorator}
               fieldName={'contactNumber'}
               placeholder={'Contact Number'}
+              onChange={this.onChangeValue}
             />
           </Form>
         </Modal>

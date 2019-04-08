@@ -8,11 +8,17 @@ const TextField = ({
   placeholder,
   icon,
   getFieldDecorator,
+  onChange
 }) => {
   return (
     <Form.Item>
       {getFieldDecorator(fieldName, { rules: [rules || {}] })(
-        <Input prefix={icon} placeholder={placeholder} />
+        <Input
+          prefix={icon}
+          placeholder={placeholder}
+          name={fieldName}
+          onChange={onChange}
+        />
       )}
     </Form.Item>
   );
@@ -27,6 +33,7 @@ TextField.propTypes = {
   }),
   placeholder: PropTypes.string.isRequired,
   icon: PropTypes.object,
+  onChange: PropTypes.func
 };
 
 export default TextField;
