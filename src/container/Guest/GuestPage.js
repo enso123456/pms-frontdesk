@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { Row, Col, Table, Button, Icon, Input, Form } from 'antd';
+import { Row, Col, Table, Button, Icon, Input, Form, Radio } from 'antd';
 
 import Modal from '../../component/Modal';
 import TextField from '../../component/TextField';
 import { GUEST_TABLE_HEADER } from '../../constant/table';
-import { getGuestLists } from '../../services/guest';
+import {
+  getGuestLists,
+  addGuest
+} from '../../services/guest';
 
 const Search = Input.Search;
+const RadioGroup = Radio.Group;
 
 class GuestPage extends Component {
   state = {
@@ -18,7 +22,8 @@ class GuestPage extends Component {
       firstName: '',
       lastName: '',
       email: '',
-      contactNumber: ''
+      contactNumber: '',
+      gender: 'male'
     },
   }
 
@@ -38,7 +43,7 @@ class GuestPage extends Component {
   }
 
   handleOk = () => {
-    this.addGuest();
+    this.onSubmitGuest();
     this.setState({
       ModalText: 'The modal will be closed after two seconds',
       confirmLoading: true,
@@ -66,9 +71,24 @@ class GuestPage extends Component {
     });
   }
 
-  addGuest = () => {
-    // integrate save form
+  onSubmitGuest = async () => {
     console.log(this.state.form);
+    // try {
+    //   const response = await addGuest(this.state.form);
+    //   console.log(response);
+    // } catch (e) {
+    //   console.log(e)
+    // }
+  }
+
+  onSelectGender = (e) => {
+    console.log('radio checked', e.target.value);
+    this.setState({
+      form: {
+        ...this.state.form,
+        gender: e.target.value
+      }
+    });
   }
 
   render() {
@@ -76,14 +96,10 @@ class GuestPage extends Component {
 
     return (
       <div>
-        <Row
-          type="flex"
-          justify="space-between"
-        >
+        <Row type="flex" justify="space-between">
           <Col>
             <Button type="primary" onClick={this.showModal}>
-              <Icon type="plus" />
-              Add Guests
+              <Icon type="plus" /> Add Guests
             </Button>
           </Col>
           <Col>
@@ -102,7 +118,6 @@ class GuestPage extends Component {
             dataSource={this.state.guests}
           />
         </Row>
-
         <Modal
           title={'Guest Details'}
           visible={this.state.visible}
@@ -126,6 +141,18 @@ class GuestPage extends Component {
               placeholder={'Last Name'}
               onChange={this.onChangeValue}
             />
+
+            <Form.Item className="collection-create-form_last-form-item">
+              {getFieldDecorator('modifier', {
+                initialValue: 'public',
+              })(
+                <RadioGroup onChange={this.onSelectGender} value={this.state.form.gender}>
+                  <Radio value={'male'}>Male</Radio>
+                  <Radio value={'female'}>Female</Radio>
+                </RadioGroup>
+              )}
+            </Form.Item>
+
             <TextField
               getFieldDecorator={getFieldDecorator}
               fieldName={'email'}
